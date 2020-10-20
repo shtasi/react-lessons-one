@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Chrome debug",
-            "preLaunchTask": "start-dev-server",
+            // "preLaunchTask": "start-dev-server",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}",
         }
