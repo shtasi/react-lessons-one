@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+//import Radium, { StyleRoot } from 'radium';
 import './App.css';
 import Person from './Person/Person';
 
@@ -35,11 +36,17 @@ class App extends Component {
 
   render() {
     const btnStyle = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      marginBottom: '12px',
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black',  
+      }
     };
 
     let personsList = null;
@@ -54,20 +61,37 @@ class App extends Component {
                            click={() => this.deletePersonHandler(idx)} />
           })}
       </div>
-      );}
+      );
+      btnStyle.backgroundColor = 'red';
+      btnStyle[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black',  
+      };
+    }
+
+    var classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold');
+    }
 
     return (
+      // <StyleRoot>
       <div className="App">
         <h1>My own React app!</h1>
-        <p>New line too</p>
+        <p className={classes.join(' ')}>New line too</p>
         <button style={btnStyle} onClick={this.togglePersonsHandler}>
           Switch view
         </button>
         {personsList}
       </div>
+      // </StyleRoot>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'New Method Creation'));
   }
 }
 
+// export default Radium(App);
 export default App;
