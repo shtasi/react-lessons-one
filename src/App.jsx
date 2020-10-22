@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import Radium, { StyleRoot } from 'radium';
 import './App.css';
 import Person from './Person/Person';
 
@@ -35,19 +34,19 @@ class App extends Component {
   }
 
   render() {
-    const btnStyle = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      marginBottom: '12px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black',  
-      }
-    };
+    // const btnStyle = {
+    //   backgroundColor: 'green',
+    //   color: 'white',
+    //   font: 'inherit',
+    //   border: '1px solid blue',
+    //   padding: '8px',
+    //   marginBottom: '12px',
+    //   cursor: 'pointer',
+    //   ':hover': {
+    //     backgroundColor: 'lightgreen',
+    //     color: 'black',  
+    //   }
+    // };
 
     let personsList = null;
     if (this.state.showPersons) {
@@ -62,11 +61,11 @@ class App extends Component {
           })}
       </div>
       );
-      btnStyle.backgroundColor = 'red';
-      btnStyle[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black',  
-      };
+      // btnStyle.backgroundColor = 'red';
+      // btnStyle[':hover'] = {
+      //   backgroundColor: 'salmon',
+      //   color: 'black',  
+      // };
     }
 
     var classes = [];
@@ -78,20 +77,15 @@ class App extends Component {
     }
 
     return (
-      // <StyleRoot>
       <div className="App">
         <h1>My own React app!</h1>
         <p className={classes.join(' ')}>New line too</p>
-        <button style={btnStyle} onClick={this.togglePersonsHandler}>
+        <button onClick={this.togglePersonsHandler}>
           Switch view
         </button>
         {personsList}
       </div>
-      // </StyleRoot>
     );
-    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'New Method Creation'));
   }
 }
-
-// export default Radium(App);
 export default App;
