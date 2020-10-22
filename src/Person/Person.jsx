@@ -1,38 +1,19 @@
 import React from 'react';
-//import Radium from 'radium';
-import styled from 'styled-components';
-// import './Person.css';
-
-const StyledDiv = styled.div`
-width: 60%;
-margin: auto;
-border: 1px solid #ddd;
-box-shadow: 0 2px 3px #ccc;
-padding: 16px;
-margin-bottom: 16px;
-text-align: center;
-
-@media (min-width: 500px) {
-width: 450px;
-}`;
+import classes from  './Person.css';
 
 const person = (props) => {
-    // const pStyle = {
-    //     '@media (min-width: 500px)': {
-    //         width: '450px'
-    //     }
-    // };
+    // const rnd = Math.random();
+    // if (rnd > 0.7) {
+    //     throw new Error('Just fignya!');
+    // }
 
     return (
-        // <div className="Person" style={pStyle}>
-        <StyledDiv>
+        <div className={classes.Person}>
             <p onClick={props.click}>New Person named {props.name} of {props.age} years old</p>
             <p>{props.children}</p>
             <input type="text" onChange={props.changed} value={props.name} />
-        {/* </div> */}
-        </StyledDiv>
+        </div> 
     )
 }
 
-// export default Radium(person);
 export default person;

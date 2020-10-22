@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from  './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -19,9 +20,11 @@ class App extends Component {
   };
 
   nameChangedHandler = (event, id) => {
-    const personId = this.state.persons.findIndex(e => e.id === id);
+    const personId = this.state.persons.findIndex(e => {
+      return e.userId === id
+    });
     const person = {...this.state.persons[personId]};
-    person.name = event.target.value
+    person.name = event.target.value;
     const persons = [...this.state.persons];
     persons[personId] = person;
 
@@ -34,53 +37,39 @@ class App extends Component {
   }
 
   render() {
-    // const btnStyle = {
-    //   backgroundColor: 'green',
-    //   color: 'white',
-    //   font: 'inherit',
-    //   border: '1px solid blue',
-    //   padding: '8px',
-    //   marginBottom: '12px',
-    //   cursor: 'pointer',
-    //   ':hover': {
-    //     backgroundColor: 'lightgreen',
-    //     color: 'black',  
-    //   }
-    // };
+    // let persons = null;
+    let btnClass = [classes.Button];
 
     let personsList = null;
     if (this.state.showPersons) {
       personsList = (
         <div>
           {this.state.persons.map((e, idx) => {
-            return <Person name={e.name}
+            return <ErrorBoundary key={e.id}>
+                      <Person name={e.name}
                            age={e.age}
-                           key={e.id}
                            changed={(event) => this.nameChangedHandler(event, e.id)}
                            click={() => this.deletePersonHandler(idx)} />
+                    </ErrorBoundary>
           })}
       </div>
       );
-      // btnStyle.backgroundColor = 'red';
-      // btnStyle[':hover'] = {
-      //   backgroundColor: 'salmon',
-      //   color: 'black',  
-      // };
+      btnClass.push(classes.Red);
     }
 
-    var classes = [];
+    var assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red');
+      assignedClasses.push(classes.red);
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold');
+      assignedClasses.push(classes.bold);
     }
 
     return (
-      <div className="App">
+      <div className={classes.App}>
         <h1>My own React app!</h1>
-        <p className={classes.join(' ')}>New line too</p>
-        <button onClick={this.togglePersonsHandler}>
+        <p className={assignedClasses.join(' ')}>New line too</p>
+        <button className={btnClass.join(' ')} onClick={this.togglePersonsHandler}>
           Switch view
         </button>
         {personsList}
