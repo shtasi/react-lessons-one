@@ -1,19 +1,33 @@
-import React from 'react';
-import classes from  './Person.css';
+import React, { Component } from 'react';
+import classes from './Person.css';
 
-const person = (props) => {
-    // const rnd = Math.random();
-    // if (rnd > 0.7) {
-    //     throw new Error('Just fignya!');
-    // }
+// const person = (props) => {
+class Person extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('[Person.js] shouldComponentUpdate');
+        return true;
+    }
 
-    return (
-        <div className={classes.Person}>
-            <p onClick={props.click}>New Person named {props.name} of {props.age} years old</p>
-            <p>{props.children}</p>
-            <input type="text" onChange={props.changed} value={props.name} />
-        </div> 
-    )
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log('[Person.js] getSnapshotBeforeUpdate');
+        return null;
+    }
+
+    componentDidUpdate() {
+        console.log('[Person.js] componentDidUpdate');
+    }
+
+    render() {
+        console.log('[Person.js] render');
+        return (
+            <div className={classes.Person}>
+                <p onClick={this.props.click}>New Person named {this.props.name} of {this.props.age} years old</p>
+                <p>{this.props.children}</p>
+                <input type="text" onChange={this.props.changed} value={this.props.name} />
+            </div>
+        )
+    }
 }
 
-export default person;
+// export default person;
+export default Person;
