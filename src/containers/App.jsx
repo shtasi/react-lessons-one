@@ -16,7 +16,8 @@ class App extends Component {
       { id: 2, name: 'Петр', age: 23 },
       { id: 3, name: 'Семен', age: 35 }
     ],
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -55,7 +56,7 @@ class App extends Component {
 
   nameChangedHandler = (event, id) => {
     const personId = this.state.persons.findIndex(e => {
-      return e.userId === id
+      return e.id === id
     });
     const person = { ...this.state.persons[personId] };
     person.name = event.target.value;
@@ -83,10 +84,11 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
-        <Cockpit showPersons={this.state.showPersons}
-          persons={this.state.persons}
+        <button onClick={() => {this.setState({showCockpit: false})}}>Remove cockpit component</button>
+        {this.state.showCockpit ? <Cockpit showPersons={this.state.showPersons}
+          personsLength={this.state.persons.length}
           clicked={this.togglePersonsHandler}
-          title={this.props.appTitle} />
+          title={this.props.appTitle} /> : null}
         {personsList}
       </div>
     );
