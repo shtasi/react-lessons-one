@@ -1,23 +1,26 @@
-import React, { Component } from 'react';
-import classes from './Person.css';
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
-import Aux from '../../../hoc/Auxilliary';
+import classes from './Person.css';
+import withClass from '../../../hoc/withClass';
+
+import AuthContext from '../../../context/auth-context';
 
 // const person = (props) => {
 class Person extends Component {
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('[Person.js] shouldComponentUpdate');
-        return true;
+
+    constructor() {
+        super();
+        this.inputElementRef = React.createRef();
     }
 
-    getSnapshotBeforeUpdate(prevProps, prevState) {
-        console.log('[Person.js] getSnapshotBeforeUpdate');
-        return null;
-    }
+    static contextType = AuthContext;
 
-    componentDidUpdate() {
-        console.log('[Person.js] componentDidUpdate');
-    }
+    componentDidMount() {
+        //this.inputElement.focus();
+        this.inputElementRef.current.focus();
+        console.log(this.context.authenticated);
+    };
 
     render() {
         console.log('[Person.js] render');
@@ -34,14 +37,30 @@ class Person extends Component {
         //         <input key="i3" type="text" onChange={this.props.changed} value={this.props.name} />
         // ];
         return (
-            <Aux>
+            <Fragment>
+                {/* <AuthContext.Consumer>
+                    {(context) => context.authenticated ? <p>Authenticated</p> : null}
+                </AuthContext.Consumer> */}
+                {this.context.authenticated ? <p>Authenticated</p> : null}
                 <p onClick={this.props.click}>New Person named {this.props.name} of {this.props.age} years old</p>
                 <p>{this.props.children}</p>
-                <input type="text" onChange={this.props.changed} value={this.props.name} />
-            </Aux>
+                <input type="text"
+                        onChange={this.props.changed}
+                        value={this.props.name} 
+                        //ref={(inputEl) => {this.inputElement = inputEl}} 
+                        ref={this.inputElementRef}
+                />
+            </Fragment>
         );
     }
 }
 
+Person.propTypes = {
+    click: PropTypes.func,
+    changed: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number
+};
+
 // export default person;
-export default Person;
+export default withClass(Person, classes.Person);
